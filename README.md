@@ -1,5 +1,7 @@
 # application
 
+git clone https://github.com/Haltax/application.git
+
 pip3 install pika
 pip3 install flask
 

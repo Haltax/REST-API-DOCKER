@@ -9,6 +9,6 @@ docker network create -d bridge redisnet
 
 docker run -d -p 6380:6380 --name myredis --network redisnet redis
 
-python python pierwszy.py
+python pierwszy.py
 python drugi.py
 python trzeci.py

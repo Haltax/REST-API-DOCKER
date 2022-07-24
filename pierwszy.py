@@ -2,11 +2,14 @@ from flask import Flask, request
 import pika
 
 
+rabbitmq_host = input("Enter the host ip: ")
+rabbitmq_queue=input("Enter the queue: ")
+
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost'))
+    pika.ConnectionParameters(host=rabbitmq_host))
 channel = connection.channel()
 
-channel.queue_declare(queue='nowa')
+channel.queue_declare(queue=rabbitmq_queue)
 
 app = Flask(__name__)
 
@@ -19,7 +22,7 @@ def process_json():
     
         json=request.json
         tmp=str(json)
-        channel.basic_publish(exchange='', routing_key='nowa', body=tmp)
+        channel.basic_publish(exchange='', routing_key=rabbitmq_queue, body=tmp)
         
         
         return json

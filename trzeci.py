@@ -1,8 +1,9 @@
 from flask import Flask, request
 import redis
 
-redis_host='localhost'
-redis_port=6379
+redis_host = input("Enter the redis_host ip: ")
+redis_port=int(input("Enter the redis port: "))
+
 
 r=redis.StrictRedis(host=redis_host,port=redis_port, decode_responses = True)
 

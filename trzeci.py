@@ -3,6 +3,7 @@ import redis
 
 redis_host = input("Enter the redis_host ip: ")
 redis_port = int(input("Enter the redis port: "))
+api_port = int(input("Enter the web port: "))
 
 
 r = redis.StrictRedis(host=redis_host, port=redis_port, decode_responses=True)
@@ -17,4 +18,4 @@ def get_size():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=api_port)

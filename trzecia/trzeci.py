@@ -1,8 +1,12 @@
 from flask import Flask, request
 import redis
+import configparser
 
-redis_host = input("Enter the redis_host ip: ")
-redis_port=int(input("Enter the redis port: "))
+#get variables from config file
+config = configparser.ConfigParser()
+config.read=('config.env')
+redis_host = config.get('Redis','Redis_IP')
+redis_port=config.get('Redis','Redis_port')
 
 
 r=redis.StrictRedis(host=redis_host,port=redis_port, decode_responses = True)

@@ -1,17 +1,24 @@
 import pika
 import redis
+import configparser
+
+#get variables from config file
+config = configparser.ConfigParser()
+config.read=('config.env')
+rabbitmq_host = config.get('Rabbitmq','Rabbit_IP')
+rabbitmq_queue = config.get('Rabbitmq','Rabbit_queue')
+redis_host = config.get('Redis','Redis_IP')
+redis_port=config.get('Redis','Redis_port')
 
 
-
-rabbitmq_host = input("Enter the rabbitmq_host ip: ")
-rabbitmq_queue=input("Enter the queue: ")
-redis_host = input("Enter the redis_host ip: ")
-redis_port=int(input("Enter the redis port: "))
-
+#live time for objects in redis
 TTL=60
+
+#for the keys in redis
 counter=0
 
 
+#Connect to rabbitmq server
 
 print(' [*] Connecting to server ...')
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
@@ -28,23 +35,16 @@ def callback(ch, method, properties, body):
     
     tmp=str(body)
     global counter
-    
-    if(r.setnx(counter,tmp) == 1):
-        r.set(counter,tmp)
-        r.expire(counter, TTL)
-        
-    else:
-  
-        while r.setnx(counter,tmp) == 0:
-            
-            r.setnx(counter,tmp)
-            r.expire(counter, TTL)
-            counter+=1
-             
-        counter=0
-    
 
-        
+  #check from key 0 if it exists
+
+    while r.setnx(counter,tmp) == 0:
+            
+        r.setnx(counter,tmp)
+        r.expire(counter, TTL)
+        counter+=1
+             
+    counter=0
 
 
     

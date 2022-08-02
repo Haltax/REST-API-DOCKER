@@ -1,9 +1,16 @@
 from flask import Flask, request
 import pika
+import argparse
 
+parser = argparse.ArgumentParser()
 
-rabbitmq_host = input("Enter the host ip: ")
-rabbitmq_queue=input("Enter the queue: ")
+parser.add_argument("-i", "--rabbit_ip", default="127.0.0.1", help="Rabbitmq IP address")
+parser.add_argument("-q", "--queue", default="new", help="Rabbitmq queue name")
+args = vars(parser.parse_args())
+
+rabbitmq_host = args["rabbit_ip"]
+rabbitmq_queue = args["queue"]
+
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=rabbitmq_host))

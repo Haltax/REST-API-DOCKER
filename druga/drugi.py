@@ -1,14 +1,21 @@
 import pika
 import redis
-import configparser
+from configparser import ConfigParser
 
-#get variables from config file
-config = configparser.ConfigParser()
-config.read=('config.env')
-rabbitmq_host = config.get('Rabbitmq','Rabbit_IP')
-rabbitmq_queue = config.get('Rabbitmq','Rabbit_queue')
-redis_host = config.get('Redis','Redis_IP')
-redis_port=config.get('Redis','Redis_port')
+
+#Read config.ini file
+config_object = ConfigParser()
+config_object.read("config.ini")
+
+#Get the rabbit ip and queue, redis ip and port
+rabitinfo = config_object["Rabbit"]
+redisinfo = config_object["Redis"]
+rabbitmq_host=format(rabitinfo["Rabbit_IP"])
+rabbitmq_queue=format(rabitinfo["Rabbit_queue"])
+redis_host = format(redisinfo["Redis_IP"])
+redis_port=format(redisinfo["Redis_port"])
+
+
 
 
 #live time for objects in redis

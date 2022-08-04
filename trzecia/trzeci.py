@@ -1,12 +1,16 @@
 from flask import Flask, request
 import redis
-import configparser
+from configparser import ConfigParser
 
-#get variables from config file
-config = configparser.ConfigParser()
-config.read=('config.env')
-redis_host = config.get('Redis','Redis_IP')
-redis_port=config.get('Redis','Redis_port')
+
+#Read config.ini file
+config_object = ConfigParser()
+config_object.read("config.ini")
+
+#Get the redis ip and port
+redisinfo = config_object["Redis"]
+redis_host = format(redisinfo["Redis_IP"])
+redis_port=format(redisinfo["Redis_port"])
 
 
 r=redis.StrictRedis(host=redis_host,port=redis_port, decode_responses = True)
@@ -14,6 +18,8 @@ r=redis.StrictRedis(host=redis_host,port=redis_port, decode_responses = True)
 app = Flask(__name__)
 
 @app.route('/size', methods=["GET"])
+
+#Get the size of keys in redis
 
 def get_size():
     size=r.dbsize()

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplikacja1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aplikacja1
+  template:
+    metadata:
+      labels:
+        app: aplikacja1
+    spec:
+      containers:
+        - name: aplikacja1
+          image: jakubstopa/aplikacja1:latest
+          ports:
+            - containerPort: 5060
+          volumeMounts:
+            - name: config
+              mountPath: "/"
+              readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+      volumes:
+        - name: config
+          configMap:
+            name: rest_api_docker-config

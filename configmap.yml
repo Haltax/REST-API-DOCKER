@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  config.yaml: |-
+    rabbitmq:
+      login: "guest"
+      password: "guest"
+      address: "rabbitmq"
+      port: "5672"
+      queuename: "kolejka"
+    aplikacja1:
+      port: "5000"
+      function: "add"
+    redis:
+      address: "redis-svc"
+      port: "6379"
+    aplikacja3:
+      port: "5001"
+      function: "size"
+kind: ConfigMap
+metadata:
+  name: rest_api_docker-config
+  namespace: default

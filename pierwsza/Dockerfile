@@ -13,5 +13,3 @@ ENV FLASK_APP=pierwszy.py
 EXPOSE 5060
 
 ENTRYPOINT ["python3", "pierwszy.py","-q","kolejka","-i","127.0.0.1"]
-#CMD ["python3", "-m", "flask", "run"]
-# ,"--host=0.0.0.0"]

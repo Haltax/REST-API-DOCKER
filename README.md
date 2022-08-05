@@ -1,6 +1,6 @@
 # application
 
-git clone https://github.com/Haltax/application.git
+git clone https://github.com/Haltax/REST_API_DOCKER.git
 
 pip3 install pika
 pip3 install flask

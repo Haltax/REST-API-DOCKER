@@ -1,17 +1,21 @@
-# application
+# REST_API_DOCKER 
 
-git clone https://github.com/Haltax/REST_API_DOCKER.git
+poster/poster.py
+Listens to POST requests
+Redirects data from POSTs to Rabbitmq
 
-pip3 install pika
-pip3 install flask
+saver/saver.py
+Consumes Rabbitmq queue
+Saves incoming data to Redis
 
-docker run -d -p 5672:5672 -p 15672:15672 rabbitmq:3.6-management-alpine
+explorer/explorer.py
+Listens to GET requests @ /size
+Returns the count of all keys in Redis
 
-docker network create -d bridge redisnet
 
-docker run -d -p 6380:6380 --name myredis --network redisnet redis
+# Requirements
 
-1 terminal: python pierwszy.py
-2 terminal: redis-cli
-3 terminal: python drugi.py
-4 terminal: python trzeci.py
+Docker bridge
+$ docker network create <network-name>
+Redis port 6379 & name=redis by default
+Rabbitmq  port 5672 & name=rabbitmq by default

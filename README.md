@@ -1,14 +1,15 @@
 # REST_API_DOCKER 
+REST_API_DOCKER is a 3 application system written by me to learn about communicating between different systems, docker and kubernetes
 
-poster/poster.py <br />
+pierwszy/pierwszy.py <br />
 Listens to POST requests <br />
 Redirects data from POSTs to Rabbitmq <br />
 
-saver/saver.py <br />
+drugi/drugi.py <br />
 Consumes Rabbitmq queue <br />
 Saves incoming data to Redis <br />
  
-explorer/explorer.py <br />
+trzeci/trzeci.py <br />
 Listens to GET requests @ /size <br />
 Returns the count of all keys in Redis <br />
 
